@@ -92,12 +92,12 @@ As synthesized in the Problem Statement Diagram (Fig.~\ref{fig:problem_statement
 
 To overcome these operational challenges, this research established an integrated computational framework combining 10 years of synchronous ground gauge observations with satellite estimates, utilizing unsupervised clustering to delineate microclimatic zones and supervised machine learning algorithms to predict multi-class rainfall intensity.
 
-\begin{figure*}[!t]
+\begin{figure}[!t]
 \centering
-\includegraphics[width=0.76\textwidth]{output_image/problem_statement_diagram.png}
+\includegraphics[width=\columnwidth]{output_image/problem_statement_diagram.png}
 \caption{Problem Statement Diagram synthesizing the hydrometeorological challenges, satellite retrieval limitations, and methodological machine learning framework for the Kathmandu watershed.}
 \label{fig:problem_statement}
-\end{figure*}
+\end{figure}
 
 \section{Literature Review}
 \label{sec:literature}
@@ -112,11 +112,11 @@ This investigation was built upon three foundational base papers and five suppor
     \item \textbf{Supporting Literature:} Tang et al. \cite{Tang2020} and Huffman et al. \cite{Huffman2020} validated the global performance and calibration algorithms of GPM IMERG V07. Breiman \cite{Breiman2001} and Chen and Guestrin \cite{Chen2016} established the algorithmic foundations for Random Forest and XGBoost. Lundberg and Lee \cite{Lundberg2017} developed the unified SHAP framework for Explainable Artificial Intelligence. Regional studies by Lamichhane et al. \cite{lamichhane2025} and Talchabhadel et al. \cite{talchabhadel2022} documented the devastating hydrometeorological impacts of recent extreme cloudbursts in the Kathmandu Valley, including the catastrophic September 2024 flood disaster.
 \end{itemize}
 
-\begin{table*}[!t]
+\begin{table}[!t]
 \centering
 \caption{Comparative Analysis of Base and Supporting Literature (Literature Review Benchmark)}
 \label{tab:lit_comparison}
-\resizebox{\textwidth}{!}{%
+\resizebox{\columnwidth}{!}{%
 \renewcommand{\arraystretch}{1.18}\setlength{\tabcolsep}{4.0pt}%
 \begin{tabular}{|p{2.6cm}|p{2.6cm}|p{3.2cm}|p{4.0cm}|p{4.4cm}|}
 \hline
@@ -133,7 +133,7 @@ This investigation was built upon three foundational base papers and five suppor
 \hline
 \end{tabular}
 }
-\end{table*}
+\end{table}
 
 \subsection{Identification of Addressed Research Gaps}
 Critical examination of existing literature identified three core research gaps that directly motivated the methodology of this study:
@@ -243,30 +243,30 @@ where $\phi_0$ is the base expected model output and $\phi_j(x)$ represents the 
 \label{sec:methodology}
 The methodological framework followed a structured, seven-stage computational pipeline (Fig.~\ref{fig:workflow_infographic}).
 
-\begin{figure*}[!t]
+\begin{figure}[!t]
 \centering
-\includegraphics[width=0.76\textwidth]{output_image/Rainfall_Analysis_Workflow_Infographic.png}
+\includegraphics[width=\columnwidth]{output_image/Rainfall_Analysis_Workflow_Infographic.png}
 \caption{Rainfall Analysis Workflow Infographic: End-to-end methodological framework for machine learning-based daily rainfall pattern analysis and extreme event classification in the Kathmandu watershed.}
 \label{fig:workflow_infographic}
-\end{figure*}
+\end{figure}
 
 \subsection{Study Area and Terrestrial Ground Observations}
 The study area covers the Kathmandu watershed ($650\text{ km}^2$, latitudes $27.55^\circ$--$27.85^\circ\text{N}$, longitudes $85.20^\circ$--$85.55^\circ\text{E}$), illustrated in Fig.~\ref{fig:study_area}. The basin features rugged topography transitioning from valley floor plains ($1{,}280\text{ masl}$) to surrounding mountain ridges exceeding $2{,}150\text{ masl}$.
 
-\begin{figure*}[!t]
+\begin{figure}[!t]
 \centering
-\includegraphics[width=0.74\textwidth]{output_image/fig1_study_area_map.png}
+\includegraphics[width=\columnwidth]{output_image/fig1_study_area_map.png}
 \caption{Location Map of the Study Area showing the spatial distribution of the 19 DHM meteorological stations within the Kathmandu watershed.}
 \label{fig:study_area}
-\end{figure*}
+\end{figure}
 
 Ground rainfall records spanning 10 complete years from 2016 through 2025 ($69{,}407$ station-days) were obtained from the DHM network. Rigorous screening and quality-control auditing across all 21 initial candidate stations (Table~\ref{tab:audit}) identified two stations with severe missingness exceeding $90\%$: Tarebhir ($100\%$ missing) and Thankot ($92.50\%$ missing). Both were excluded, retaining 19 high-quality stations (Table~\ref{tab:stations}). Remaining missing observations across the 19 stations were imputed using daily linear interpolation bounded at zero (Fig.~\ref{fig:data_qc_imputation}).
 
-\begin{table*}[!t]
+\begin{table}[!t]
 \centering
 \caption{Screening and Quality-Control Audit of All 21 Initial Station Records Across the Kathmandu Watershed Domain (2016--2025)}
 \label{tab:audit}
-\resizebox{\textwidth}{!}{%
+\resizebox{\columnwidth}{!}{%
 \renewcommand{\arraystretch}{1.18}\setlength{\tabcolsep}{4.5pt}%
 \begin{tabular}{|l|l|r|r|r|r|p{5.5cm}|}
 \hline
@@ -298,12 +298,12 @@ Sundarijal (Mul.) & Kathmandu & 3653 & 0 & 0.0\% & 160.0 & Retained; 100\% compl
 \hline
 \end{tabular}%
 }
-\end{table*}
-\begin{table*}[!t]
+\end{table}
+\begin{table}[!t]
 \centering
 \caption{19 DHM Terrestrial Meteorological Stations across the Kathmandu Watershed}
 \label{tab:stations}
-\resizebox{\textwidth}{!}{%
+\resizebox{\columnwidth}{!}{%
 \renewcommand{\arraystretch}{1.18}\setlength{\tabcolsep}{8.0pt}%
 \begin{tabular}{|c|l|c|c|c|c|}
 \hline
@@ -331,23 +331,23 @@ Sundarijal (Mul.) & Kathmandu & 3653 & 0 & 0.0\% & 160.0 & Retained; 100\% compl
 \hline
 \end{tabular}%
 }
-\end{table*}
-\begin{figure*}[!t]
+\end{table}
+\begin{figure}[!t]
 \centering
-\includegraphics[width=0.74\textwidth]{output_image/missing_value_heatmap.png}
+\includegraphics[width=\columnwidth]{output_image/missing_value_heatmap.png}
 \caption{Terrestrial rainfall data quality control and missing value imputation across 19 DHM stations in the Kathmandu watershed (2016--2025): (a) Temporal missingness matrix identifying 3,694 historical observation gaps before imputation, and (b) Continuous daily rainfall hydrograph resulting from time-series linear interpolation during an active monsoon sensor outage (Nagarjun Station case study).}
 \label{fig:data_qc_imputation}
 \label{fig:missing_values}
-\end{figure*}
+\end{figure}
 
 \subsection{Satellite Data, Intensity Categories, and Preprocessing}
 Gridded satellite precipitation was extracted from NASA's GPM IMERG V07 Final Run ($0.1^\circ \times 0.1^\circ$ resolution) at corresponding station locations. Daily rainfall was classified into five standard operational categories established by WMO and DHM guidelines (Table~\ref{tab:intensity_classes}). The dataset exhibits severe class imbalance: Class 0 (Light Rain, $0$--$10\text{ mm/day}$) accounts for $86.11\%$ of records, whereas hazardous Class 3 (Very Heavy Rain, $50$--$100\text{ mm/day}$) and Class 4 (Extreme Cloudbursts, $>100\text{ mm/day}$) comprise only $0.11\%$ combined.
 
-\begin{table*}[!t]
+\begin{table}[!t]
 \centering
 \caption{Daily Rainfall Intensity Classification Thresholds and Sample Distribution Across the Chronological Split (19 Stations, 2016--2025)}
 \label{tab:intensity_classes}
-\resizebox{\textwidth}{!}{%
+\resizebox{\columnwidth}{!}{%
 \renewcommand{\arraystretch}{1.18}\setlength{\tabcolsep}{6.0pt}%
 \begin{tabular}{|l|l|c|c|c|c|c|}
 \hline
@@ -362,7 +362,7 @@ Class 4 & Extreme & $P \ge 200$ & $0$ ($0.00\%$) & $9$ ($0.06\%$) & $0$ ($0.00\%
 \hline
 \end{tabular}%
 }
-\end{table*}
+\end{table}
 
 \subsection{Feature Engineering and Model Configurations}
 Eight predictive features were extracted: daily satellite rainfall ($P_t$), multi-day antecedent rainfall rolling sums ($P_{t-1}, P_{t-3}, P_{t-7}$), station elevation, latitude, longitude, and calendar month.
@@ -375,11 +375,11 @@ To evaluate generalization and prevent temporal data leakage, records were split
 \end{itemize}
 In addition, Leave-One-District-Out (LODO) spatial cross-validation was conducted across Kathmandu, Lalitpur, and Bhaktapur districts to evaluate spatial generalization to unmonitored sectors. Hyperparameters were tuned to prevent overfitting while handling class imbalance (Table~\ref{tab:hyperparameters}).
 
-\begin{table*}[!t]
+\begin{table}[!t]
 \caption{Hyperparameter and Preprocessing Configuration for Evaluated Machine Learning Classifiers}
 \label{tab:hyperparameters}
 \centering
-\resizebox{\textwidth}{!}{%
+\resizebox{\columnwidth}{!}{%
 \renewcommand{\arraystretch}{1.18}\setlength{\tabcolsep}{5.0pt}%
 \begin{tabular}{|p{3.0cm}|p{3.5cm}|p{10.2cm}|}
 \hline
@@ -391,7 +391,7 @@ In addition, Leave-One-District-Out (LODO) spatial cross-validation was conducte
 \hline
 \end{tabular}
 }
-\end{table*}
+\end{table}
 
 \section{Results and Evaluation}
 \label{sec:results}
@@ -465,12 +465,12 @@ Extreme Events ($>100$ mm) & $+0.3778$ & $0.1491$ & $+0.8889\text{ events/yr}$ &
 \end{tabular}%
 }
 \end{table}
-\begin{figure*}[!t]
+\begin{figure}[!t]
 \centering
-\includegraphics[width=0.74\textwidth]{output_image/comprehensive_trend_analysis.png}
+\includegraphics[width=\columnwidth]{output_image/comprehensive_trend_analysis.png}
 \caption{Comprehensive trend analysis (2016-2025) indicating shifting temporal rainfall volumes, extreme event frequencies, and rainy days across the Kathmandu watershed using Mann-Kendall and Sen's slope.}
 \label{fig:annual_trend}
-\end{figure*}
+\end{figure}
 
 Station rainfall distributions (Fig.~\ref{fig:boxplot}) and logarithmic intensity frequencies (Fig.~\ref{fig:intensity_dist}) highlighted steep spatial gradients across the watershed. Normalizing station features (Fig.~\ref{fig:station_heatmap}) and applying K-Means clustering confirmed $K=3$ as optimal, achieving a Silhouette score of $0.584$ (Fig.~\ref{fig:kmeans_optimal}).
 
@@ -512,12 +512,12 @@ The 3D PCA cluster visualization (Fig.~\ref{fig:pca_3d}) and isohyetal profile (
 \caption{3D Spatial Clustering of Rainfall Regimes using PCA and K-Means. The distinct algorithmic groupings correlated strongly with station elevation and topographic positioning.}
 \label{fig:pca_3d}
 \end{figure}
-\begin{figure*}[!t]
+\begin{figure}[!t]
 \centering
-\includegraphics[width=0.74\textwidth]{output_image/isohyet_map_and_elevation_chart.png}
+\includegraphics[width=\columnwidth]{output_image/isohyet_map_and_elevation_chart.png}
 \caption{Isohyetal Precipitation Map and Topographic Elevation Lapse Rate across the Kathmandu Watershed (2016--2025): (a) Spatial isohyetal precipitation contour map interpolated from 19 DHM ground stations using Radial Basis Functions (RBF) and clipped to the official watershed boundary (\texttt{Watershed\_Boundary.shp}), demonstrating spatial precipitation gradients from the valley floor to the ridges; (b) Station elevation versus 10-year mean annual precipitation, confirming physical orographic enhancement with an empirical lapse rate of $+62.9$~mm per 100~m elevation rise ($R^2 = 0.105$, $p < 0.05$) between the basin floor (Tikathali: 1,000.5 mm) and the surrounding headwaters (Sundarijal Mulkharka: 2,341.0 mm).}
 \label{fig:isohyet_elevation}
-\end{figure*}
+\end{figure}
 
 \subsection{Classification Benchmarks on the Independent 2025 Test Set}
 Computational complexity benchmarks across all evaluated algorithms are detailed in Table~\ref{tab:complexity}.
@@ -588,32 +588,26 @@ On the held-out 2025 independent test set ($N = 6{,}935$), feature-scaled Linear
 \end{tabular}%
 }
 \end{table*}
-\begin{figure*}[!t]
+\begin{figure}[!t]
 \centering
-\begin{minipage}[t]{0.485\textwidth}
-  \centering
-  \includegraphics[width=0.98\linewidth,height=5.6cm,keepaspectratio]{output_image/confusion_matrices.png}\\[2pt]
-  {\footnotesize\textbf{(a)} Multi-Model Confusion Matrices ($N = 6{,}935$)}
-  \label{fig:confusion}
-\end{minipage}\hfill
-\begin{minipage}[t]{0.485\textwidth}
-  \centering
-  \includegraphics[width=0.98\linewidth,height=5.6cm,keepaspectratio]{output_image/roc_curves.png}\\[2pt]
-  {\footnotesize\textbf{(b)} Multi-Class ROC Curves and AUC Benchmarks}
-  \label{fig:roc}
-\end{minipage}
+\includegraphics[width=0.98\columnwidth]{output_image/confusion_matrices.png}\\[2pt]
+{\footnotesize\textbf{(a)} Multi-Model Diagnostic Confusion Matrices}\\[4pt]
+\includegraphics[width=0.98\columnwidth]{output_image/roc_curves.png}\\[2pt]
+{\footnotesize\textbf{(b)} Multi-Class One-vs-Rest ROC Curves}
 \caption{Model Evaluation Diagnostics on the Independent 2025 Test Set ($N = 6{,}935$): (a) Confusion matrices and (b) One-vs-Rest ROC curves across Random Forest, XGBoost, Scaled Linear SVM, and Scaled RBF SVM.}
-\label{fig:eval_diag}
-\end{figure*}
+\label{fig:confusion}
+\label{fig:confusion_matrices}
+\label{fig:roc_curves}
+\end{figure}
 
 Comparative per-class performance across precision, recall, and F1-scores is illustrated in Fig.~\ref{fig:per_class_barchart}. Leave-One-District-Out spatial testing confirmed stable accuracy across all three administrative districts ($71.21\%$--$75.85\%$, Table~\ref{tab:spatial}). Taylor diagram analysis (Fig.~\ref{fig:taylor}) demonstrated improved statistical calibration over raw satellite retrievals.
 
-\begin{figure*}[!t]
+\begin{figure}[!t]
 \centering
-\includegraphics[width=0.72\textwidth]{output_image/per_class_metrics_barchart.png}
+\includegraphics[width=\columnwidth]{output_image/per_class_metrics_barchart.png}
 \caption{Comparative analysis of per-class Precision, Recall, and F1-Score across all five precipitation intensity categories on the 2025 independent test set ($N = 6{,}935$) for Random Forest, XGBoost, Scaled Linear SVM, and Scaled RBF SVM.}
 \label{fig:per_class_barchart}
-\end{figure*}
+\end{figure}
 \begin{table}[!t]
 \centering
 \caption{Spatial Holdout Validation (Leave-One-District-Out Cross-Validation Across All 19 Stations in the Kathmandu Watershed, $N = 69{,}407$)}
@@ -748,6 +742,7 @@ K.~E.~Taylor, ``Summarizing multiple aspects of model performance in a single di
 
 \end{thebibliography}
 
+\clearpage
 \appendices
 \nobalance
 \section{Artifact Repository Link}
@@ -785,7 +780,6 @@ Visual evidence documenting the sequential execution of all ten sections of \tex
 \caption{Jupyter Notebook Execution Evidence: (a) Section 1 Setup and Imports, and (b) Section 2 Data Ingestion and Preprocessing (\texttt{ML\_Rainfall\_Analysis.ipynb}).}
 \label{fig:app_nb_pair1_2}
 \end{figure*}
-\clearpage
 \begin{figure*}[!t]
 \centering
 \begin{minipage}[t]{0.485\textwidth}
@@ -804,7 +798,6 @@ Visual evidence documenting the sequential execution of all ten sections of \tex
 \caption{Jupyter Notebook Execution Evidence: (a) Section 3 Feature Engineering, and (b) Section 4 Exploratory Data Analysis (\texttt{ML\_Rainfall\_Analysis.ipynb}).}
 \label{fig:app_nb_pair3_4}
 \end{figure*}
-\clearpage
 \begin{figure*}[!t]
 \centering
 \begin{minipage}[t]{0.485\textwidth}
@@ -823,7 +816,6 @@ Visual evidence documenting the sequential execution of all ten sections of \tex
 \caption{Jupyter Notebook Execution Evidence: (a) Section 5 PCA and Clustering, and (b) Section 6 Supervised Machine Learning Pipeline (\texttt{ML\_Rainfall\_Analysis.ipynb}).}
 \label{fig:app_nb_pair5_6}
 \end{figure*}
-\clearpage
 \begin{figure*}[!t]
 \centering
 \begin{minipage}[t]{0.485\textwidth}
@@ -842,7 +834,6 @@ Visual evidence documenting the sequential execution of all ten sections of \tex
 \caption{Jupyter Notebook Execution Evidence: (a) Section 7 Model Performance Benchmarking, and (b) Section 8 Explainable AI and SHAP Analysis (\texttt{ML\_Rainfall\_Analysis.ipynb}).}
 \label{fig:app_nb_pair7_8}
 \end{figure*}
-\clearpage
 \begin{figure*}[!t]
 \centering
 \begin{minipage}[t]{0.485\textwidth}
@@ -861,7 +852,6 @@ Visual evidence documenting the sequential execution of all ten sections of \tex
 \caption{Jupyter Notebook Execution Evidence: (a) Section 9 Satellite Bias Profiling, and (b) Section 10 Decadal Climate Trend Detection (\texttt{ML\_Rainfall\_Analysis.ipynb}).}
 \label{fig:app_nb_pair9_10}
 \end{figure*}
-\clearpage
 \begin{figure*}[!t]
 \centering
 \fbox{\includegraphics[width=0.70\textwidth,height=7.0cm,keepaspectratio]{output_image/mac_code_dashboard.png}}
@@ -869,6 +859,7 @@ Visual evidence documenting the sequential execution of all ten sections of \tex
 \label{fig:mac_code_dash}
 \end{figure*}
 
+\clearpage
 \clearpage
 \section{Dashboard Screenshots: All Functional Sections}
 \label{app:dashboard}
@@ -891,7 +882,6 @@ Visual evidence documenting all six operational sections of the interactive Stre
 \caption{Streamlit Dashboard Execution Evidence: (a) Section 1 Overview and Analytics, and (b) Section 2 Dynamic Spatial Bias Analysis.}
 \label{fig:dash_sec1_sec2}
 \end{figure*}
-\clearpage
 \begin{figure*}[!t]
 \centering
 \begin{minipage}[t]{0.485\textwidth}
@@ -909,7 +899,6 @@ Visual evidence documenting all six operational sections of the interactive Stre
 \caption{Streamlit Dashboard Execution Evidence: (a) Section 3 Spatial Regime Clustering, and (b) Section 4 Model Evaluation Benchmarks.}
 \label{fig:dash_sec3_sec4}
 \end{figure*}
-\clearpage
 \begin{figure*}[!t]
 \centering
 \begin{minipage}[t]{0.485\textwidth}
@@ -928,6 +917,7 @@ Visual evidence documenting all six operational sections of the interactive Stre
 \label{fig:dash_sec5_sec6}
 \end{figure*}
 
+\clearpage
 \clearpage
 \section{Output Evidence}
 \label{app:output}
@@ -950,7 +940,6 @@ Supplementary empirical validation figures generated during pipeline execution a
 \caption{Output Evidence: (a) Multi-model confusion matrices and (b) Multi-class One-vs-Rest ROC curves evaluated on the independent 2025 test dataset ($N = 6{,}935$ across 19 stations in the Kathmandu watershed).}
 \label{fig:app_c_pair1}
 \end{figure*}
-\clearpage
 \begin{figure*}[!t]
 \centering
 \begin{minipage}[t]{0.485\textwidth}
