@@ -780,144 +780,198 @@ A comprehensive video demonstration showcasing the end-to-end execution of the c
 \label{app:code}
 Visual evidence documenting the sequential execution of all ten sections of \texttt{ML\_Rainfall\_Analysis.ipynb} and \texttt{dashboard.py} is presented below.
 
-\begin{figure}[!t]
+\begin{figure*}[!t]
 \centering
-\fbox{\includegraphics[width=0.98\columnwidth,height=3.3cm,keepaspectratio]{output_image/mac_code_sec1_setup_imports.png}}\\[2pt]
-{\footnotesize\textbf{(a) Section 1:} Environment Setup, Dependency Verification, and Library Imports}\\[4pt]
-\fbox{\includegraphics[width=0.98\columnwidth,height=3.3cm,keepaspectratio]{output_image/mac_code_sec2_data_ingestion.png}}\\[2pt]
-{\footnotesize\textbf{(b) Section 2:} Terrestrial DHM and Satellite GPM IMERG Ingestion and Quality Control}
+\begin{minipage}[t]{0.485\textwidth}
+  \centering
+  \fbox{\includegraphics[width=0.98\linewidth,height=5.4cm,keepaspectratio]{output_image/mac_code_sec1_setup_imports.png}}\\[2pt]
+  {\footnotesize\textbf{(a) Section 1:} Environment Setup, Dependency Verification, and Library Imports}
+  \label{fig:app_nb_part1}
+  \label{fig:app_nb_sec1}
+\end{minipage}\hfill
+\begin{minipage}[t]{0.485\textwidth}
+  \centering
+  \fbox{\includegraphics[width=0.98\linewidth,height=5.4cm,keepaspectratio]{output_image/mac_code_sec2_data_ingestion.png}}\\[2pt]
+  {\footnotesize\textbf{(b) Section 2:} Terrestrial DHM and Satellite GPM IMERG Ingestion and Quality Control}
+  \label{fig:app_nb_sec2}
+\end{minipage}
 \caption{Jupyter Notebook Execution Evidence: (a) Section 1 Setup and Imports, and (b) Section 2 Data Ingestion and Preprocessing (\texttt{ML\_Rainfall\_Analysis.ipynb}).}
-\label{fig:app_nb_part1}
-\label{fig:app_nb_sec1}
-\label{fig:app_nb_sec2}
 \label{fig:app_nb_pair1_2}
-\end{figure}
-
-\begin{figure}[!t]
+\end{figure*}
+\begin{figure*}[!t]
 \centering
-\fbox{\includegraphics[width=0.98\columnwidth,height=3.3cm,keepaspectratio]{output_image/mac_code_sec3_feature_engineering.png}}\\[2pt]
-{\footnotesize\textbf{(a) Section 3:} Spatio-Temporal Structuring, Antecedent Rainfall Lags, and Topographic Predictors}\\[4pt]
-\fbox{\includegraphics[width=0.98\columnwidth,height=3.3cm,keepaspectratio]{output_image/mac_code_sec4_eda_topography.png}}\\[2pt]
-{\footnotesize\textbf{(b) Section 4:} Exploratory Data Analysis, Ground-to-Satellite Correlations, and Density Heatmaps}
+\begin{minipage}[t]{0.485\textwidth}
+  \centering
+  \fbox{\includegraphics[width=0.98\linewidth,height=5.4cm,keepaspectratio]{output_image/mac_code_sec3_feature_engineering.png}}\\[2pt]
+  {\footnotesize\textbf{(a) Section 3:} Spatio-Temporal Structuring, Antecedent Rainfall Lags, and Topographic Predictors}
+  \label{fig:app_nb_part2}
+  \label{fig:app_nb_sec3}
+\end{minipage}\hfill
+\begin{minipage}[t]{0.485\textwidth}
+  \centering
+  \fbox{\includegraphics[width=0.98\linewidth,height=5.4cm,keepaspectratio]{output_image/mac_code_sec4_eda_topography.png}}\\[2pt]
+  {\footnotesize\textbf{(b) Section 4:} Exploratory Data Analysis, Ground-to-Satellite Correlations, and Density Heatmaps}
+  \label{fig:app_nb_sec4}
+\end{minipage}
 \caption{Jupyter Notebook Execution Evidence: (a) Section 3 Feature Engineering, and (b) Section 4 Exploratory Data Analysis (\texttt{ML\_Rainfall\_Analysis.ipynb}).}
-\label{fig:app_nb_part2}
-\label{fig:app_nb_sec3}
-\label{fig:app_nb_sec4}
 \label{fig:app_nb_pair3_4}
-\end{figure}
-
-\begin{figure}[!t]
+\end{figure*}
+\begin{figure*}[!t]
 \centering
-\fbox{\includegraphics[width=0.98\columnwidth,height=3.3cm,keepaspectratio]{output_image/mac_code_sec5_pca_clustering.png}}\\[2pt]
-{\footnotesize\textbf{(a) Section 5:} Unsupervised Machine Learning: PCA and K-Means Micro-Climatic Regime Clustering}\\[4pt]
-\fbox{\includegraphics[width=0.98\columnwidth,height=3.3cm,keepaspectratio]{output_image/mac_code_sec6_ml_pipeline.png}}\\[2pt]
-{\footnotesize\textbf{(b) Section 6:} Supervised Classification Pipeline: Chronological Train, Validation, and Test Partitioning}
+\begin{minipage}[t]{0.485\textwidth}
+  \centering
+  \fbox{\includegraphics[width=0.98\linewidth,height=5.4cm,keepaspectratio]{output_image/mac_code_sec5_pca_clustering.png}}\\[2pt]
+  {\footnotesize\textbf{(a) Section 5:} Unsupervised Machine Learning: PCA and K-Means Micro-Climatic Regime Clustering}
+  \label{fig:app_nb_part3}
+  \label{fig:app_nb_sec5}
+\end{minipage}\hfill
+\begin{minipage}[t]{0.485\textwidth}
+  \centering
+  \fbox{\includegraphics[width=0.98\linewidth,height=5.4cm,keepaspectratio]{output_image/mac_code_sec6_ml_pipeline.png}}\\[2pt]
+  {\footnotesize\textbf{(b) Section 6:} Supervised Classification Pipeline: Chronological Train, Validation, and Test Partitioning}
+  \label{fig:app_nb_sec6}
+\end{minipage}
 \caption{Jupyter Notebook Execution Evidence: (a) Section 5 PCA and Clustering, and (b) Section 6 Supervised Machine Learning Pipeline (\texttt{ML\_Rainfall\_Analysis.ipynb}).}
-\label{fig:app_nb_part3}
-\label{fig:app_nb_sec5}
-\label{fig:app_nb_sec6}
 \label{fig:app_nb_pair5_6}
-\end{figure}
-
-\begin{figure}[!t]
+\end{figure*}
+\begin{figure*}[!t]
 \centering
-\fbox{\includegraphics[width=0.98\columnwidth,height=3.3cm,keepaspectratio]{output_image/mac_code_sec7_model_evaluation.png}}\\[2pt]
-{\footnotesize\textbf{(a) Section 7:} Comparative Model Performance Benchmarking on the 2025 Holdout}\\[4pt]
-\fbox{\includegraphics[width=0.98\columnwidth,height=3.3cm,keepaspectratio]{output_image/mac_code_sec8_shap_xai.png}}\\[2pt]
-{\footnotesize\textbf{(b) Section 8:} Explainable AI (XAI): SHAP Attribution and Antecedent Feature Importance}
+\begin{minipage}[t]{0.485\textwidth}
+  \centering
+  \fbox{\includegraphics[width=0.98\linewidth,height=5.4cm,keepaspectratio]{output_image/mac_code_sec7_model_evaluation.png}}\\[2pt]
+  {\footnotesize\textbf{(a) Section 7:} Comparative Model Performance Benchmarking on the 2025 Holdout}
+  \label{fig:app_nb_part4}
+  \label{fig:app_nb_sec7}
+\end{minipage}\hfill
+\begin{minipage}[t]{0.485\textwidth}
+  \centering
+  \fbox{\includegraphics[width=0.98\linewidth,height=5.4cm,keepaspectratio]{output_image/mac_code_sec8_shap_xai.png}}\\[2pt]
+  {\footnotesize\textbf{(b) Section 8:} Explainable AI (XAI): SHAP Attribution and Antecedent Feature Importance}
+  \label{fig:app_nb_sec8}
+\end{minipage}
 \caption{Jupyter Notebook Execution Evidence: (a) Section 7 Model Performance Benchmarking, and (b) Section 8 Explainable AI and SHAP Analysis (\texttt{ML\_Rainfall\_Analysis.ipynb}).}
-\label{fig:app_nb_part4}
-\label{fig:app_nb_sec7}
-\label{fig:app_nb_sec8}
 \label{fig:app_nb_pair7_8}
-\end{figure}
-
-\begin{figure}[!t]
+\end{figure*}
+\begin{figure*}[!t]
 \centering
-\fbox{\includegraphics[width=0.98\columnwidth,height=3.3cm,keepaspectratio]{output_image/mac_code_sec9_satellite_bias.png}}\\[2pt]
-{\footnotesize\textbf{(a) Section 9:} Satellite Retrieval Bias Profiling and Topographic Elevation Gradients}\\[4pt]
-\fbox{\includegraphics[width=0.98\columnwidth,height=3.3cm,keepaspectratio]{output_image/mac_code_sec10_trend_analysis.png}}\\[2pt]
-{\footnotesize\textbf{(b) Section 10:} Decadal Non-Parametric Climate Trend Detection with Mann--Kendall and Sen's Slope}
+\begin{minipage}[t]{0.485\textwidth}
+  \centering
+  \fbox{\includegraphics[width=0.98\linewidth,height=5.4cm,keepaspectratio]{output_image/mac_code_sec9_satellite_bias.png}}\\[2pt]
+  {\footnotesize\textbf{(a) Section 9:} Satellite Retrieval Bias Profiling and Topographic Elevation Gradients}
+  \label{fig:app_nb_part5}
+  \label{fig:app_nb_sec9}
+\end{minipage}\hfill
+\begin{minipage}[t]{0.485\textwidth}
+  \centering
+  \fbox{\includegraphics[width=0.98\linewidth,height=5.4cm,keepaspectratio]{output_image/mac_code_sec10_trend_analysis.png}}\\[2pt]
+  {\footnotesize\textbf{(b) Section 10:} Decadal Non-Parametric Climate Trend Detection with Mann--Kendall and Sen's Slope}
+  \label{fig:app_nb_sec10}
+\end{minipage}
 \caption{Jupyter Notebook Execution Evidence: (a) Section 9 Satellite Bias Profiling, and (b) Section 10 Decadal Climate Trend Detection (\texttt{ML\_Rainfall\_Analysis.ipynb}).}
-\label{fig:app_nb_part5}
-\label{fig:app_nb_sec9}
-\label{fig:app_nb_sec10}
 \label{fig:app_nb_pair9_10}
-\end{figure}
-
-\begin{figure}[!t]
+\end{figure*}
+\begin{figure*}[!t]
 \centering
-\fbox{\includegraphics[width=0.98\columnwidth,height=4.6cm,keepaspectratio]{output_image/mac_code_dashboard.png}}
+\fbox{\includegraphics[width=0.70\textwidth,height=7.0cm,keepaspectratio]{output_image/mac_code_dashboard.png}}
 \caption{Interactive Streamlit Web Dashboard Source Code (\texttt{dashboard.py}), detailing the real-time inference engine and multi-section user interface architecture (macOS Light Theme).}
 \label{fig:mac_code_dash}
-\end{figure}
+\end{figure*}
 
+\clearpage
 \section{Dashboard Screenshots: All Functional Sections}
 \label{app:dashboard}
-Visual evidence documenting all six operational sections of the interactive Streamlit decision-support application (\texttt{dashboard.py}) deployed locally at \url{http://localhost:8501/} is presented below:
+Visual evidence documenting all six operational sections of the interactive Streamlit decision-support application (\texttt{dashboard.py}) deployed locally at \texttt{http://localhost:8501/} is presented below:
 
-\begin{figure}[!t]
+\begin{figure*}[!t]
 \centering
-\fbox{\includegraphics[width=0.98\columnwidth,height=3.3cm,keepaspectratio]{output_image/dashboard_sec1_overview.png}}\\[2pt]
-{\footnotesize\textbf{(a) Section 1:} Overview and Exploratory Data Analytics, featuring 3D animated metric cards and category distributions}\\[4pt]
-\fbox{\includegraphics[width=0.98\columnwidth,height=3.3cm,keepaspectratio]{output_image/dashboard_sec2_spatial_bias.png}}\\[2pt]
-{\footnotesize\textbf{(b) Section 2:} Dynamic Spatial Bias Analysis, displaying interactive geospatial bias map across the valley}
+\begin{minipage}[t]{0.485\textwidth}
+  \centering
+  \fbox{\includegraphics[width=0.98\linewidth,height=5.2cm,keepaspectratio]{output_image/dashboard_sec1_overview.png}}\\[2pt]
+  {\footnotesize\textbf{(a) Section 1:} Overview and Exploratory Data Analytics, featuring 3D animated metric cards and category distributions}
+  \label{fig:dash_sec1}
+\end{minipage}\hfill
+\begin{minipage}[t]{0.485\textwidth}
+  \centering
+  \fbox{\includegraphics[width=0.98\linewidth,height=5.2cm,keepaspectratio]{output_image/dashboard_sec2_spatial_bias.png}}\\[2pt]
+  {\footnotesize\textbf{(b) Section 2:} Dynamic Spatial Bias Analysis, displaying interactive geospatial bias map across the valley}
+  \label{fig:dash_sec2}
+\end{minipage}
 \caption{Streamlit Dashboard Execution Evidence: (a) Section 1 Overview and Analytics, and (b) Section 2 Dynamic Spatial Bias Analysis.}
-\label{fig:dash_sec1}
-\label{fig:dash_sec2}
 \label{fig:dash_sec1_sec2}
-\end{figure}
-
-\begin{figure}[!t]
+\end{figure*}
+\begin{figure*}[!t]
 \centering
-\fbox{\includegraphics[width=0.98\columnwidth,height=3.3cm,keepaspectratio]{output_image/dashboard_sec3_clustering_pca.png}}\\[2pt]
-{\footnotesize\textbf{(a) Section 3:} Spatial Clustering of Rainfall Regimes, showing interactive 3D PCA cluster scatter and projections}\\[4pt]
-\fbox{\includegraphics[width=0.98\columnwidth,height=3.3cm,keepaspectratio]{output_image/dashboard_sec4_model_eval.png}}\\[2pt]
-{\footnotesize\textbf{(b) Section 4:} Machine Learning Model Evaluation Benchmarks, presenting comparative classification metrics}
+\begin{minipage}[t]{0.485\textwidth}
+  \centering
+  \fbox{\includegraphics[width=0.98\linewidth,height=5.2cm,keepaspectratio]{output_image/dashboard_sec3_clustering_pca.png}}\\[2pt]
+  {\footnotesize\textbf{(a) Section 3:} Spatial Clustering of Rainfall Regimes, showing interactive 3D PCA cluster scatter and projections}
+  \label{fig:dash_sec3}
+\end{minipage}\hfill
+\begin{minipage}[t]{0.485\textwidth}
+  \centering
+  \fbox{\includegraphics[width=0.98\linewidth,height=5.2cm,keepaspectratio]{output_image/dashboard_sec4_model_eval.png}}\\[2pt]
+  {\footnotesize\textbf{(b) Section 4:} Machine Learning Model Evaluation Benchmarks, presenting comparative classification metrics}
+  \label{fig:dash_sec4}
+\end{minipage}
 \caption{Streamlit Dashboard Execution Evidence: (a) Section 3 Spatial Regime Clustering, and (b) Section 4 Model Evaluation Benchmarks.}
-\label{fig:dash_sec3}
-\label{fig:dash_sec4}
 \label{fig:dash_sec3_sec4}
-\end{figure}
-
-\begin{figure}[!t]
+\end{figure*}
+\begin{figure*}[!t]
 \centering
-\fbox{\includegraphics[width=0.98\columnwidth,height=3.3cm,keepaspectratio]{output_image/dashboard_sec5_trend_analysis.png}}\\[2pt]
-{\footnotesize\textbf{(a) Section 5:} Temporal Decadal Trend Analysis, featuring annual OLS regressions and daily time series slider}\\[4pt]
-\fbox{\includegraphics[width=0.98\columnwidth,height=3.3cm,keepaspectratio]{output_image/dashboard_sec6_live_prediction.png}}\\[2pt]
-{\footnotesize\textbf{(b) Section 6:} Live XGBoost Rainfall Prediction Engine with user-interactive antecedent precipitation sliders}
+\begin{minipage}[t]{0.485\textwidth}
+  \centering
+  \fbox{\includegraphics[width=0.98\linewidth,height=5.2cm,keepaspectratio]{output_image/dashboard_sec5_trend_analysis.png}}\\[2pt]
+  {\footnotesize\textbf{(a) Section 5:} Temporal Decadal Trend Analysis, featuring annual OLS regressions and daily time series slider}
+  \label{fig:dash_sec5}
+\end{minipage}\hfill
+\begin{minipage}[t]{0.485\textwidth}
+  \centering
+  \fbox{\includegraphics[width=0.98\linewidth,height=5.2cm,keepaspectratio]{output_image/dashboard_sec6_live_prediction.png}}\\[2pt]
+  {\footnotesize\textbf{(b) Section 6:} Live XGBoost Rainfall Prediction Engine with user-interactive antecedent precipitation sliders}
+  \label{fig:dash_sec6}
+\end{minipage}
 \caption{Streamlit Dashboard Execution Evidence: (a) Section 5 Decadal Trend Analysis, and (b) Section 6 Live XGBoost Prediction Engine.}
-\label{fig:dash_sec5}
-\label{fig:dash_sec6}
 \label{fig:dash_sec5_sec6}
-\end{figure}
+\end{figure*}
 
+\clearpage
 \section{Output Evidence}
 \label{app:output}
 Supplementary empirical validation figures generated during pipeline execution are documented below:
 
-\begin{figure}[!t]
+\begin{figure*}[!t]
 \centering
-\fbox{\includegraphics[width=0.98\columnwidth,height=3.3cm,keepaspectratio]{output_image/confusion_matrices.png}}\\[2pt]
-{\footnotesize\textbf{(a)} Multi-Model Confusion Matrices (2025 Test Set,  = 6{,}935$)}\\[4pt]
-\fbox{\includegraphics[width=0.98\columnwidth,height=3.3cm,keepaspectratio]{output_image/roc_curves.png}}\\[2pt]
-{\footnotesize\textbf{(b)} Multi-Class One-vs-Rest ROC Curves and AUC Benchmarks}
-\caption{Output Evidence: (a) Multi-model confusion matrices and (b) Multi-class One-vs-Rest ROC curves evaluated on the independent 2025 test dataset ( = 6{,}935$ across 19 stations in the Kathmandu watershed).}
-\label{fig:conf_matrices_app}
-\label{fig:roc_curves_app}
+\begin{minipage}[t]{0.485\textwidth}
+  \centering
+  \fbox{\includegraphics[width=0.98\linewidth,height=5.4cm,keepaspectratio]{output_image/confusion_matrices.png}}\\[2pt]
+  {\footnotesize\textbf{(a)} Multi-Model Confusion Matrices (2025 Test Set, $N = 6{,}935$)}
+  \label{fig:conf_matrices_app}
+\end{minipage}\hfill
+\begin{minipage}[t]{0.485\textwidth}
+  \centering
+  \fbox{\includegraphics[width=0.98\linewidth,height=5.4cm,keepaspectratio]{output_image/roc_curves.png}}\\[2pt]
+  {\footnotesize\textbf{(b)} Multi-Class One-vs-Rest ROC Curves and AUC Benchmarks}
+  \label{fig:roc_curves_app}
+\end{minipage}
+\caption{Output Evidence: (a) Multi-model confusion matrices and (b) Multi-class One-vs-Rest ROC curves evaluated on the independent 2025 test dataset ($N = 6{,}935$ across 19 stations in the Kathmandu watershed).}
 \label{fig:app_c_pair1}
-\end{figure}
-
-\begin{figure}[!t]
+\end{figure*}
+\begin{figure*}[!t]
 \centering
-\fbox{\includegraphics[width=0.98\columnwidth,height=3.3cm,keepaspectratio]{output_image/seasonal_distribution.png}}\\[2pt]
-{\footnotesize\textbf{(a)} Seasonal Precipitation Distribution Across 19 DHM Stations in the Kathmandu Watershed}\\[4pt]
-\fbox{\includegraphics[width=0.98\columnwidth,height=3.3cm,keepaspectratio]{output_image/elevation_bias.png}}\\[2pt]
-{\footnotesize\textbf{(b)} NASA GPM IMERG Topographic Elevation Bias Gradient}
+\begin{minipage}[t]{0.485\textwidth}
+  \centering
+  \fbox{\includegraphics[width=0.98\linewidth,height=5.2cm,keepaspectratio]{output_image/seasonal_distribution.png}}\\[2pt]
+  {\footnotesize\textbf{(a)} Seasonal Precipitation Distribution Across 19 DHM Stations in the Kathmandu Watershed}
+  \label{fig:seasonal}
+\end{minipage}\hfill
+\begin{minipage}[t]{0.485\textwidth}
+  \centering
+  \fbox{\includegraphics[width=0.98\linewidth,height=5.2cm,keepaspectratio]{output_image/elevation_bias.png}}\\[2pt]
+  {\footnotesize\textbf{(b)} NASA GPM IMERG Topographic Elevation Bias Gradient}
+  \label{fig:extra_bias}
+\end{minipage}
 \caption{Output Evidence: (a) Seasonal precipitation dynamics and (b) Topographic elevation bias gradient across the 1,280--2,150~masl vertical profile.}
-\label{fig:seasonal}
-\label{fig:extra_bias}
 \label{fig:app_c_pair2}
-\end{figure}
+\end{figure*}
 
 \end{document}
