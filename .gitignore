@@ -95,7 +95,7 @@ bak/
 *.fdb_latexmk
 *.fls
 *.log
-*.out
+*.out 
 *.run.xml
 *.synctex.gz
 *.synctex(busy)
