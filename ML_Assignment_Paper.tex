@@ -461,7 +461,7 @@ Feature correlation analysis (Fig.~\ref{fig:correlation}) confirmed strong corre
 \end{figure}
 
 \subsection{Decadal Trend Detection and Spatial Microclimates}
-Non-parametric Mann--Kendall trend analysis across 2016--2025 (Table~\ref{tab:mann_kendall}, Fig.~\ref{fig:annual_trend}) revealed a statistically significant increase in annual mean rainfall ($\tau = +0.5111, p = 0.0491$, Sen's slope $+0.2012\text{ mm/yr}$) and heavy rain days ($\tau = +0.6000, p = 0.0210$, $+0.0820\text{ days/yr}$). Annual maximum daily precipitation ($+2.4800\text{ mm/yr}$) and extreme storm events ($+0.8889\text{ events/yr}$) showed notable upward trends.
+Non-parametric Mann--Kendall trend analysis across 2016--2025 (Table~\ref{tab:mann_kendall}, Fig.~\ref{fig:annual_trend}) revealed a statistically significant increase in annual mean rainfall ($\tau = +0.5111, p = 0.0491$, Sen's slope $+0.2012\text{ mm/yr}$). Annual maximum daily precipitation ($+2.4800\text{ mm/yr}$), rainy days ($+40.1667\text{ days/yr}$), and extreme storm events ($+0.8889\text{ events/yr}$) showed consistent upward trajectories across the 10-year record.
 
 \begin{table}[!t]
 \centering
@@ -688,7 +688,7 @@ All data utilized in this study was accessed under open research licenses from D
 This research developed a machine learning framework for daily rainfall classification and decadal trend detection across the Kathmandu watershed, integrating 10 years of synchronous ground gauge data ($69{,}407$ station-days) with GPM IMERG satellite estimates. The findings directly resolve the core research objectives:
 \begin{enumerate}
     \item \textbf{Satellite Reliability:} Raw GPM IMERG V07 satellite rainfall systematically overestimates daily rainfall ($\text{MB} = +2.78\text{ mm/day}$) and exhibits a $46.12\%$ False Alarm Ratio over mountain terrain, confirming the necessity of ground calibration.
-    \item \textbf{Decadal Trend Shifts:} Mann--Kendall tests confirmed statistically significant increases in annual rainfall ($+0.2012\text{ mm/yr}, p = 0.0491$) and heavy rain days ($+0.0820\text{ days/yr}, p = 0.0210$), proving that extreme precipitation events are intensifying.
+    \item \textbf{Decadal Trend Shifts:} Mann--Kendall tests confirmed statistically significant increases in annual rainfall ($+0.2012\text{ mm/yr}, p = 0.0491$), while annual maximum daily rainfall ($+2.4800\text{ mm/yr}$) and extreme storm events ($+0.8889\text{ events/yr}$) showed notable upward trajectories.
     \item \textbf{Classification Performance and Physical Drivers:} On the 2025 independent test set ($N = 6{,}935$), feature-scaled Linear SVM achieved $74.72\%$ accuracy, while XGBoost delivered superior heavy storm discrimination ($0.88$ Macro ROC-AUC, $42.65\%$ Class 2 recall). SHAP analysis confirmed that antecedent rainfall memory ($P_{t-1}$) is the primary physical predictor ($74.47\%$ relative gain).
 \end{enumerate}
 
