@@ -1,0 +1,71 @@
+================================================================================
+COURSEWORK SCREENCAST & CODE DEMONSTRATION PLAN
+================================================================================
+Student Name: Sadhana Adhikari
+Coventry University ID: 17625409
+Softwarica College ID: 260102
+Email: 260102@softwarica.edu.np
+Module: ST7072CEM / STW7072CEM Machine Learning
+Topic: Machine Learning-Based Analysis of Daily Rainfall Patterns and Extreme Rainfall Events in the Kathmandu Valley
+Submission Deadline: October 2026
+Estimated Video Duration: 5 - 7 minutes
+Recommended Resolution: 1080p (1920x1080) at 30 fps
+================================================================================
+
+1. VIDEO RECORDING STRUCTURE & TIMESTAMPS
+--------------------------------------------------------------------------------
+00:00 - 00:45 | Segment 1: Title, Student Identity & Research Motivation
+  - On-screen: Title slide or repository README showing Sadhana Adhikari, CUID 17625409, Softwarica ID 260102, STW7072CEM.
+  - Spoken Content: Introduce the research question: evaluating whether machine learning classifiers can accurately predict daily rainfall intensity categories and capture rare extreme downpours across a high-relief watershed using 19 ground stations paired with NASA GPM IMERG satellite data (2016-2025, 69,407 observations).
+  - Highlight the core motivation: addressing satellite elevation bias and providing real-time disaster early warnings in steep Himalayan terrain.
+
+00:45 - 01:30 | Segment 2: 19-Station Dataset Screening Audit & Leakage-Free Preprocessing
+  - On-screen: Show Table I (21-station screening audit) and loaded dataframe in `ML_Rainfall_Analysis.ipynb`.
+  - Spoken Content: Explain data quality control: out of 21 candidate stations, Tarebhir (100% missing) and Thankot (92.5% missing) were removed. Tikathali (Station 1080) and Buddhanilakantha (Station 1083) were retained, yielding 19 operational stations (1,305 to 2,147 masl).
+  - Emphasize methodological rigor: temporal holdout splitting (2016-2022 training vs 2023-2025 testing) and spatial leave-one-district-out validation to prevent data leakage.
+
+01:30 - 02:30 | Segment 3: Exploratory Data Analysis & Unsupervised Regimes (PCA & K-Means)
+  - On-screen: Display Figure 1 (Terrain map), Figure 2 (PCA 2D biplot), Figure 8 (Interactive 3D PCA), and Figure 4 (Cluster radar chart).
+  - Spoken Content: Discuss how PCA reduces 8 dimensions while retaining >90% cumulative variance. Explain how K-Means (k=3) naturally clusters stations into valley floor, mid-slope, and high-altitude ridge regimes, matching local orography.
+
+02:30 - 03:45 | Segment 4: Supervised ML Training, Regularization & Computational Complexity
+  - On-screen: Show execution of Cell 13 & Cell 14 in `ML_Rainfall_Analysis.ipynb`.
+  - Spoken Content: Demonstrate training of the 3 core models:
+    1. Random Forest (15 shallow estimators, max_depth=3, class_weight='balanced')
+    2. XGBoost (100 estimators, max_depth=3, balanced weighting)
+    3. Linear SVM (C=0.1, linear decision boundary)
+  - Highlight computational efficiency (Table VII): compact model memory (<470 KB) and sub-millisecond inference (<0.85 ms) suitable for edge stations.
+
+03:45 - 05:00 | Segment 5: Comparative Evaluation, Disaster Warning & Spatial Validation
+  - On-screen: Display Table VIII (Model comparison), Figure 7 (Confusion matrices), Figure 8 (ROC curves), and Table IX (Spatial Holdout).
+  - Spoken Content: Discuss empirical results:
+    - XGBoost achieved top test performance (F1: 80.54%, Accuracy: 76.50%).
+    - Random Forest followed closely (F1: 78.90%, Accuracy: 73.52%).
+    - Linear SVM collapsed to 12.56% accuracy because linear hyperplanes fail in rugged orographic topography, mathematically proving the necessity of non-linear tree ensembles.
+    - Review Table IX showing spatial generalizability across Bhaktapur (74.1% F1), Lalitpur (72.9% F1), and Kathmandu (78.5% F1).
+
+05:00 - 06:00 | Segment 6: Live Demonstration of Interactive Streamlit GUI Dashboard (Plotly)
+  - On-screen: Run `streamlit run dashboard.py` in browser.
+  - Spoken Content: Walk through the 6 interactive dashboard tabs:
+    - Tab 1: Geospatial Station Map (interactive zoomable Plotly scatter map)
+    - Tab 2: Exploratory Data Analysis & Monthly Rainfall Distributions
+    - Tab 3: Satellite Product Validation & Taylor Diagram
+    - Tab 4: Interactive 3D PCA Regimes & Cluster Radar
+    - Tab 5: Supervised Model Benchmark & Confusion Matrix heatmaps
+    - Tab 6: Real-Time Rainfall Intensity Inference Engine (adjust elevation, satellite rainfall slider, and demonstrate real-time probability prediction).
+
+06:00 - 06:30 | Segment 7: Conclusions, Social & Ethical Impact, & Wrap-Up
+  - On-screen: Show final paper conclusions, GitHub repository, and clean folder structure.
+  - Spoken Content: Conclude by summarizing societal benefits for Himalayan disaster resilience and municipal early warnings. Thank Coventry University and Softwarica faculty.
+
+================================================================================
+2. DEMONSTRATION CHECKLIST FOR RECORDING
+--------------------------------------------------------------------------------
+[ ] Ensure Python environment is active: `pip install -r requirements.txt`.
+[ ] Open Jupyter Notebook: `jupyter notebook Assignment/full_code/ML_Rainfall_Analysis.ipynb`.
+[ ] Verify all 23 cells have executed outputs visible.
+[ ] Launch Streamlit Dashboard: `streamlit run Assignment/full_code/dashboard.py`.
+[ ] Test interactive Plotly sliders and 3D PCA rotation in browser.
+[ ] Check microphone audio and set screen recording resolution to 1080p (1920x1080).
+[ ] Keep pacing steady according to the 7 segments (total duration 5 to 7 minutes).
+================================================================================

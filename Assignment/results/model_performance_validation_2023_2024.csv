@@ -1,0 +1,5 @@
+Model,Accuracy (%),Balanced Accuracy (%),Weighted Precision (%),Weighted Recall (%),Weighted F1-Score (%),Macro Precision,Macro Recall,Macro F1-Score,Weighted F1-Score,Cohen Kappa
+Random Forest,76.61,44.33,88.31,76.61,81.04,0.2907,0.4433,0.3046,0.8104,0.3734
+XGBoost,76.86,46.94,87.91,76.86,81.2,0.2902,0.4694,0.3079,0.812,0.3678
+SVM (Linear),80.82,46.78,87.31,80.82,83.54,0.3073,0.4678,0.3287,0.8354,0.4079
+SVM (RBF),77.46,37.1,88.2,77.46,81.43,0.2873,0.371,0.3016,0.8143,0.3873

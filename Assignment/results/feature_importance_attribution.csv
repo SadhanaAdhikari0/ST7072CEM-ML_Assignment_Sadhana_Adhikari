@@ -1,0 +1,9 @@
+Feature,Relative_Gain_Importance,Split_Weight_Count
+GPM_1day,0.7447,433
+GPM_3day,0.0947,193
+GPM_7day,0.0656,228
+GPM_Rainfall,0.0476,282
+Latitude,0.0344,114
+Month,0.0073,98
+Longitude,0.0035,26
+Elevation,0.0022,26

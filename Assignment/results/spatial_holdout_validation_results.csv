@@ -1,0 +1,4 @@
+Held_Out_District,Test_Stations,Test_Samples,Accuracy (%),Macro F1,Weighted F1
+Bhaktapur,3,10959,71.95,0.335,0.7792
+Lalitpur,6,21918,71.21,0.321,0.7818
+Kathmandu,10,36530,75.85,0.3008,0.7989
