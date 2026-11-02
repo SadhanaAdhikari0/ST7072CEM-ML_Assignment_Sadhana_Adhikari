@@ -11,6 +11,8 @@
 \usepackage{xcolor}
 \usepackage[bookmarks=false]{hyperref}
 \usepackage{dblfloatfix}
+\usepackage{microtype}
+\usepackage{balance}
 \extrafloats{100}
 \providecommand{\appendices}{\appendix}
 
@@ -25,6 +27,16 @@
 \setcounter{bottomnumber}{4}
 \setcounter{totalnumber}{10}
 \setcounter{dbltopnumber}{4}
+
+% Eliminate float vertical whitespace gaps
+\makeatletter
+\setlength{\@fptop}{0pt}
+\setlength{\@fpbot}{0pt plus 1fil}
+\setlength{\@fpsep}{4pt plus 1pt minus 1pt}
+\setlength{\@dblfptop}{0pt}
+\setlength{\@dblfpbot}{0pt plus 1fil}
+\setlength{\@dblfpsep}{4pt plus 1pt minus 1pt}
+\makeatother
 
 \raggedbottom
 \setlength{\parskip}{0pt plus 0.5pt}
@@ -291,7 +303,7 @@ Sundarijal (Mul.) & Kathmandu & 3653 & 0 & 0.0\% & 160.0 & Retained; 100\% compl
 \centering
 \caption{19 DHM Terrestrial Meteorological Stations across the Kathmandu Watershed}
 \label{tab:stations}
-\resizebox{0.92\textwidth}{!}{%
+\resizebox{\textwidth}{!}{%
 \renewcommand{\arraystretch}{1.18}\setlength{\tabcolsep}{8.0pt}%
 \begin{tabular}{|c|l|c|c|c|c|}
 \hline
@@ -335,7 +347,7 @@ Gridded satellite precipitation was extracted from NASA's GPM IMERG V07 Final Ru
 \centering
 \caption{Daily Rainfall Intensity Classification Thresholds and Sample Distribution Across the Chronological Split (19 Stations, 2016--2025)}
 \label{tab:intensity_classes}
-\resizebox{0.88\textwidth}{!}{%
+\resizebox{\textwidth}{!}{%
 \renewcommand{\arraystretch}{1.18}\setlength{\tabcolsep}{6.0pt}%
 \begin{tabular}{|l|l|c|c|c|c|c|}
 \hline
@@ -387,7 +399,7 @@ In addition, Leave-One-District-Out (LODO) spatial cross-validation was conducte
 \subsection{Satellite Baseline Validation and Exploratory Analysis}
 Scatter evaluation between DHM ground gauges and raw GPM IMERG satellite estimates (Fig.~\ref{fig:dhm_vs_gpm}) revealed moderate correlation ($r = 0.3770$), an RMSE of $9.7749\text{ mm/day}$, and systematic overestimation ($\text{MB} = +2.7810\text{ mm/day}$, Relative Bias $+46.12\%$). Categorical validation demonstrated high detection capability ($\text{POD} = 81.36\%$) accompanied by frequent false alarms ($\text{FAR} = 46.12\%$, $\text{CSI} = 0.4816$), summarized in Table~\ref{tab:satellite_eval}.
 
-\begin{figure}[htbp]
+\begin{figure}[!t]
 \centering
 \includegraphics[width=0.88\columnwidth]{output_image/dhm_vs_gpm_scatter.png}
 \caption{Scatter analysis comparing ground truth DHM observations with raw GPM IMERG satellite estimates across the Kathmandu watershed, highlighting systemic biases and heteroscedasticity.}
@@ -417,13 +429,13 @@ Categorical & Critical Success Index (CSI) & $0.4867$ ($48.67\%$) \\
 
 Feature correlation analysis (Fig.~\ref{fig:correlation}) confirmed strong correlations between antecedent rainfall rolling features ($P_{t-3}, P_{t-7}, r = 0.76$). Monthly rainfall distributions (Fig.~\ref{fig:monthly_precip}) demonstrated strong monsoon seasonality, with July and August receiving over $75\%$ of annual precipitation volume.
 
-\begin{figure}[htbp]
+\begin{figure}[!t]
 \centering
 \includegraphics[width=0.88\columnwidth]{output_image/correlation_matrix.png}
 \caption{Pearson Correlation Matrix illustrating the multi-collinearity and statistical relationships between engineered features and ground precipitation.}
 \label{fig:correlation}
 \end{figure}
-\begin{figure}[htbp]
+\begin{figure}[!t]
 \centering
 \includegraphics[width=0.86\columnwidth]{output_image/fig6_monthly_precipitation.png}
 \caption{Average Monthly Precipitation and Standard Deviation across the Kathmandu Watershed (2016--2025), illustrating intense rainfall concentration during the summer monsoon window.}
@@ -462,25 +474,25 @@ Extreme Events ($>100$ mm) & $+0.3778$ & $0.1491$ & $+0.8889\text{ events/yr}$ &
 
 Station rainfall distributions (Fig.~\ref{fig:boxplot}) and logarithmic intensity frequencies (Fig.~\ref{fig:intensity_dist}) highlighted steep spatial gradients across the watershed. Normalizing station features (Fig.~\ref{fig:station_heatmap}) and applying K-Means clustering confirmed $K=3$ as optimal, achieving a Silhouette score of $0.584$ (Fig.~\ref{fig:kmeans_optimal}).
 
-\begin{figure}[htbp]
+\begin{figure}[!t]
 \centering
 \includegraphics[width=0.88\columnwidth]{output_image/boxplot_stations.png}
 \caption{Boxplot analysis of daily precipitation across all 19 DHM stations (2016--2025), illustrating station-specific variance, skewness, and extreme convective outliers.}
 \label{fig:boxplot}
 \end{figure}
-\begin{figure}[htbp]
+\begin{figure}[!t]
 \centering
 \includegraphics[width=0.86\columnwidth]{output_image/fig11_intensity_distribution.png}
 \caption{Logarithmic distribution of Rainfall Intensity Classes, demonstrating the profound dataset imbalance dominated by 'Light' rainfall events.}
 \label{fig:intensity_dist}
 \end{figure}
-\begin{figure}[htbp]
+\begin{figure}[!t]
 \centering
 \includegraphics[width=0.88\columnwidth]{output_image/station_heatmap.png}
 \caption{Normalized Station Feature Heatmap illustrating the relative intensity of mean rainfall, variability, and geographic characteristics across the 19 monitoring stations.}
 \label{fig:station_heatmap}
 \end{figure}
-\begin{figure}[htbp]
+\begin{figure}[!t]
 \centering
 \includegraphics[width=0.88\columnwidth]{output_image/kmeans_optimal_k.png}
 \caption{Elbow Method and Silhouette Score analysis confirming $k=3$ as the optimal number of spatial rainfall regimes across the Kathmandu watershed.}
@@ -494,7 +506,7 @@ The 3D PCA cluster visualization (Fig.~\ref{fig:pca_3d}) and isohyetal profile (
     \item \textbf{Cluster 2 (Ridge-Tops, $>1,600$ masl):} 3 stations (e.g., Nagarkot, Sundarijal), highest precipitation ($>2{,}000\text{ mm}$).
 \end{itemize}
 
-\begin{figure}[htbp]
+\begin{figure}[!t]
 \centering
 \includegraphics[width=0.86\columnwidth]{output_image/fig8_pca_clusters_3d.png}
 \caption{3D Spatial Clustering of Rainfall Regimes using PCA and K-Means. The distinct algorithmic groupings correlated strongly with station elevation and topographic positioning.}
@@ -619,7 +631,7 @@ Kathmandu & 10 & $36{,}530$ & $75.85\%$ & $0.3008$ & $0.7989$ \\
 \end{tabular}%
 }
 \end{table}
-\begin{figure}[htbp]
+\begin{figure}[!t]
 \centering
 \includegraphics[width=0.84\columnwidth]{output_image/taylor_diagram.png}
 \caption{Taylor Diagram evaluating the baseline statistical calibration of GPM IMERG V07 satellite estimates against DHM ground truth observations ($r = 0.3770$) in the Kathmandu watershed.}
@@ -628,13 +640,13 @@ Kathmandu & 10 & $36{,}530$ & $75.85\%$ & $0.3008$ & $0.7989$ \\
 
 Feature importance from native XGBoost (Fig.~\ref{fig:feat_imp}) and global SHAP attribution (Fig.~\ref{fig:shap}) confirmed that antecedent rainfall from the previous 1 to 3 days dominated model decisions ($74.47\%$ relative gain for 1-day lag; $9.47\%$ for 3-day lag).
 
-\begin{figure}[htbp]
+\begin{figure}[!t]
 \centering
 \includegraphics[width=0.86\columnwidth]{output_image/feature_importance.png}
 \caption{XGBoost native Feature Importance (relative split gain across boosted trees), highlighting the dominant role of antecedent temporal lags and concurrent satellite precipitation.}
 \label{fig:feat_imp}
 \end{figure}
-\begin{figure}[htbp]
+\begin{figure}[!t]
 \centering
 \includegraphics[width=0.88\columnwidth]{output_image/shap_summary.png}
 \caption{SHAP Global Summary Plot on the 2025 independent test set illustrating predictor impact and directional attributions across all eight predictors.}
@@ -670,6 +682,7 @@ This research developed a machine learning framework for daily rainfall classifi
 
 \textbf{Limitations and Future Work:} The study is constrained by 10 years of daily records and lacks terrestrial stations above 2,200 masl. Future work should integrate high-resolution X-band dual-polarization weather radar, evaluate recurrent deep architectures (LSTM/TCN) for hourly sub-daily forecasting, and deploy solar-powered IoT tipping-bucket rain gauges across unmonitored ridgelines to power automated municipal flood warning systems.
 
+\balance
 \begin{thebibliography}{20}
 \raggedright\hbadness=10000
 
@@ -736,7 +749,7 @@ K.~E.~Taylor, ``Summarizing multiple aspects of model performance in a single di
 \end{thebibliography}
 
 \appendices
-\clearpage
+\nobalance
 \section{Artifact Repository Link}
 \label{app:github}
 The complete computational framework, source code, interactive dashboard, serialized models, and documentation are publicly available on GitHub:
@@ -744,14 +757,12 @@ The complete computational framework, source code, interactive dashboard, serial
 \noindent\textbf{GitHub Repository URL:} \\
 \url{https://github.com/SadhanaAdhikari0/ST7072CEM-ML_Assignment_Sadhana_Adhikari.git}
 
-\clearpage
 \section{Video Demonstration Link}
 \label{app:video}
 A comprehensive video demonstration showcasing the end-to-end execution of the computational pipeline, model evaluation, and live interactive dashboard exploration has been recorded:
 
 \noindent\textbf{Video Evidence URL:} \url{https://youtube.com/YourVideoLink}
 
-\clearpage
 \section{Code Evidence Screenshots: Complete Jupyter Notebook Pipeline}
 \label{app:code}
 Visual evidence documenting the sequential execution of all ten sections of \texttt{ML\_Rainfall\_Analysis.ipynb} and \texttt{dashboard.py} is presented below.
