@@ -69,28 +69,46 @@ Email: 260102@softwarica.edu.np
 \sloppy\hbadness=10000\vbadness=10000
 
 \begin{abstract}
-Heavy rainfall and extreme storm events cause frequent floods and landslides in mountain valleys. This study developed an operational machine learning framework to analyze daily rainfall patterns and classify precipitation intensity across the Kathmandu watershed. Ten complete years of daily ground measurements (2016--2025; $69{,}407$ station-days) from 19 Department of Hydrology and Meteorology (DHM) stations were integrated with NASA Global Precipitation Measurement (GPM) IMERG V07 satellite estimates. Direct statistical validation revealed that raw satellite estimates systematically overestimated light rainfall with a mean bias of $+2.78\text{ mm/day}$ and exhibited a high false alarm ratio ($\text{FAR} = 46.12\%$). Unsupervised Principal Component Analysis (PCA) and K-Means clustering identified three distinct microclimatic rainfall zones governed by station elevation ($K=3$, Silhouette score $0.584$). To tackle severe class imbalance ($86.11\%$ light rain vs. $0.11\%$ combined very heavy and extreme events), regularized Random Forest, XGBoost, and feature-scaled Support Vector Machines (Linear and RBF kernels) were trained using a chronological split (2016--2022 training, 2023--2024 validation, and 2025 independent test) alongside Leave-One-District-Out spatial testing. On the independent 2025 test set ($N = 6{,}935$), feature-scaled Linear SVM delivered the highest overall accuracy ($74.72\%$, weighted F1: $78.92\%$, macro F1: $0.3682$). Random Forest attained the highest balanced accuracy ($59.80\%$, macro F1: $0.3446$), correctly identifying $80.00\%$ of very heavy storms. XGBoost achieved $70.48\%$ overall accuracy, the highest heavy rain recall ($42.65\%$), and the highest Macro ROC-AUC ($0.88$). Spatial cross-validation confirmed stable generalization across Kathmandu, Lalitpur, and Bhaktapur districts ($71.21\%$--$75.85\%$ accuracy). SHAP feature attribution demonstrated that antecedent rainfall memory from the previous 1 to 3 days exerted the greatest physical influence on model predictions ($74.47\%$ relative gain for 1-day lag; $9.47\%$ for 3-day lag). Non-parametric Mann--Kendall trend tests confirmed a statistically significant rise in annual average rainfall ($\tau = +0.5111$, $p = 0.0491$, $Q = +0.2012\text{ mm/year}$), while daily maximums ($+2.4800\text{ mm/year}$) and extreme events ($+0.8889\text{ events/year}$) exhibited marked upward trends, offering valuable guidance for municipal flood warnings and disaster mitigation.
+Heavy rainfall and extreme precipitation events represent critical indicators of climate-related hazards, particularly in rapidly urbanizing mountain valleys. This study developed an operational machine learning framework for analyzing daily rainfall patterns and classifying precipitation intensity across the Kathmandu watershed. Ten complete years of daily ground observations (2016--2025; $69{,}407$ station-days) from 19 Department of Hydrology and Meteorology (DHM) stations were integrated with NASA Global Precipitation Measurement (GPM) IMERG V07 satellite estimates. Direct statistical validation showed that raw satellite data systematically overestimated light rainfall with a mean bias of $+2.78\text{ mm/day}$ and produced frequent false alarms ($\text{FAR} = 46.12\%$). Unsupervised Principal Component Analysis (PCA) and K-Means clustering identified three distinct microclimatic rainfall zones governed by station elevation ($K=3$, Silhouette score $0.584$). To address severe class imbalance ($86.11\%$ light rain vs. $0.11\%$ combined very heavy and extreme events), regularized Random Forest, XGBoost, and feature-scaled Support Vector Machines (Linear and RBF kernels) were evaluated using a strict chronological split (2016--2022 training, 2023--2024 validation, and 2025 independent test) alongside Leave-One-District-Out spatial testing. On the 2025 independent test set ($N = 6{,}935$), feature-scaled Linear SVM achieved the highest overall accuracy ($74.72\%$, weighted F1: $78.92\%$, macro F1: $0.3682$). Random Forest attained the highest balanced accuracy ($59.80\%$, macro F1: $0.3446$) and identified $80.00\%$ of very heavy storms. XGBoost delivered $70.48\%$ overall accuracy, the highest heavy rain recall ($42.65\%$), and the highest Macro ROC-AUC ($0.88$). Spatial testing confirmed stable generalization across all three districts ($71.21\%$--$75.85\%$ accuracy). SHAP feature attribution demonstrated that antecedent rainfall memory from the previous 1 to 3 days exerted the greatest physical influence on model predictions ($74.47\%$ relative gain for 1-day lag; $9.47\%$ for 3-day lag). Non-parametric Mann--Kendall trend tests confirmed a statistically significant rise in annual average rainfall ($\tau = +0.5111$, $p = 0.0491$, $Q = +0.2012\text{ mm/year}$), while daily maximums ($+2.4800\text{ mm/year}$) and extreme events ($+0.8889\text{ events/year}$) exhibited marked upward trends, providing valuable evidence for municipal flood warnings and climate adaptation.
 \end{abstract}
 
 \begin{IEEEkeywords}
-Rainfall variability, extreme rainfall, machine learning, GPM IMERG V07, Kathmandu Valley, Bagmati Basin, Random Forest, XGBoost, Support Vector Machines, SHAP, Mann--Kendall.
+Rainfall variability, extreme rainfall, climate variability, machine learning, GPM IMERG V07, Kathmandu Valley, Random Forest, XGBoost, Support Vector Machines, SHAP, Mann--Kendall.
 \end{IEEEkeywords}
 
 
-\section{Introduction and Problem Statement}
+\section{Introduction}
 \label{sec:introduction}
-Precipitation extremes in the Central Himalayan region represent severe hydrometeorological hazards, triggering recurrent flash floods, destructive debris flows, and extensive urban inundation. The Kathmandu watershed (Upper Bagmati Basin), which accommodates over 2.5 million inhabitants within an area of approximately $650\text{ km}^2$, is exceptionally susceptible to catastrophic hydrometeorological events. This acute vulnerability stems from rapid, unplanned urban expansion, dense settlements along natural floodplains, and complex bowl-shaped topography spanning elevations from 1,280 meters above sea level (masl) on the valley floor to over 2,150 masl along surrounding mountain ridges. During the South Asian Summer Monsoon (June to September), moist air masses from the Bay of Bengal encounter these steep topographic barriers, generating intense orographic convection and localized cloudbursts that rapidly overwhelm natural drainage channels.
+Precipitation in Nepal is strongly influenced by South Asian summer monsoon dynamics, complex Himalayan orography, steep elevation gradients, and seasonal atmospheric processes. The Kathmandu Valley watershed, covering approximately $650\text{ km}^2$ and inhabited by over 2.5 million people, is acutely sensitive to hydrometeorological hazards. Rapid urbanization, dense floodplain settlements, and bowl-shaped topography spanning 1,280 to over 2,150 meters above sea level (masl) heighten vulnerability to urban flooding, landslides, and infrastructure damage.
 
-Effective disaster mitigation and municipal risk reduction require timely, highly reliable daily rainfall estimates. Ground-based weather radars remain unavailable in the Kathmandu Basin, and terrestrial tipping-bucket rain gauges operated by the Department of Hydrology and Meteorology (DHM) are irregularly distributed across mountain slopes. While satellite products like NASA's Global Precipitation Measurement (GPM) IMERG provide continuous spatial coverage, spaceborne passive microwave and infrared sensors experience significant retrieval errors over rugged topography due to ground clutter, high surface emissivity variations, and cloud-top height uncertainties.
+Variations in precipitation totals, rainy-day frequency, and storm intensity are key indicators of regional climate variability and adaptation. While identifying multi-year rainfall trends provides essential empirical evidence for hazard planning, short observational records cannot establish formal anthropogenic climate-change attribution, which requires multi-decadal records and climate models. Thus, this study focuses on quantifying observed rainfall variability, decadal trends, and extreme events to inform disaster risk reduction and climate resilience.
 
-As synthesized in the Problem Statement Diagram (Fig.~\ref{fig:problem_statement}), three primary challenges impede dependable precipitation modeling and hazard forecasting in the Kathmandu watershed:
+Terrestrial tipping-bucket gauges maintained by the Department of Hydrology and Meteorology (DHM) provide reliable ground measurements but have limited spatial density across mountain slopes. Gridded satellite products complement gauge networks; specifically, NASA's Global Precipitation Measurement (GPM) IMERG V07 product has demonstrated notable utility in capturing precipitation extremes across Nepal \cite{sharma2020}. Nonetheless, satellite retrievals exhibit uncertainties over mountainous terrain due to ground clutter and cloud-top dynamics. Machine learning algorithms provide powerful capabilities to calibrate satellite estimates, identify spatial regimes, and classify rainfall intensity categories \cite{khanal2024, lei2025}.
+
+
+\section{Aim and Research Objectives}
+\label{sec:objectives}
+The main aim of this study is to develop a machine learning framework for analyzing daily rainfall patterns and extreme rainfall events across the Kathmandu watershed using DHM ground observations and GPM IMERG V07 satellite data (2016--2025), assessing rainfall changes relevant to climate variability and urban risk management.
+
+The specific research objectives are:
 \begin{enumerate}
-    \item \textbf{Substantial Satellite Estimation Bias in Mountain Basins:} Spaceborne precipitation estimates systematically overestimate light drizzle while underestimating localized convective cloudbursts along steep ridgelines, leading to frequent false alarms and missed flood-inducing storms.
-    \item \textbf{Shifting Decadal Hydrometeorological Regimes:} Historical rainfall baselines are shifting under regional climate variability, necessitating rigorous non-parametric trend detection to quantify decadal intensification in storm volume and frequency.
-    \item \textbf{Severe Observational Class Imbalance:} Life-threatening extreme cloudbursts comprise less than $0.15\%$ of total daily observations, causing standard machine learning algorithms to exhibit strong majority-class bias toward non-hazardous light rain.
+    \item \textbf{Objective 1 (Spatial Patterns and Regimes):} To analyze daily rainfall spatial-temporal variability and delineate microclimatic regimes using Principal Component Analysis (PCA) and K-Means clustering.
+    \item \textbf{Objective 2 (Supervised Intensity Classification and Explainability):} To develop and compare Random Forest, XGBoost, and Support Vector Machine (Linear and RBF) models across five intensity categories, interpreting the most influential predictors using SHAP.
+    \item \textbf{Objective 3 (Decadal Trend and Extreme Event Analysis):} To assess decadal changes in annual totals, seasonal concentration, rainy-day frequency, and extreme events using Mann--Kendall and Sen's slope methods.
 \end{enumerate}
 
-To overcome these operational challenges, this research established an integrated computational framework combining 10 years of synchronous ground gauge observations with satellite estimates, utilizing unsupervised clustering to delineate microclimatic zones and supervised machine learning algorithms to predict multi-class rainfall intensity.
+These objectives resolve six core research questions addressing spatial patterns, cluster regimes, optimal classification models under severe class imbalance, SHAP physical drivers, decadal trend significance, and critical watershed zones for disaster planning.
+
+
+\section{Problem Statement}
+\label{sec:problem_statement}
+Precipitation modeling in the Kathmandu watershed faces three primary challenges (Fig.~\ref{fig:problem_statement}):
+\begin{enumerate}
+    \item \textbf{Topographic Satellite Retrieval Uncertainty:} Spaceborne sensors struggle over rugged mountain terrain, systematically overestimating light drizzle while underestimating localized convective cloudbursts along steep ridges, producing high false alarm ratios ($\text{FAR} = 46.12\%$).
+    \item \textbf{Severe Observational Class Imbalance:} Life-threatening heavy and extreme storm events ($\ge 50\text{ mm/day}$) comprise only $0.11\%$ of historical records, causing unweighted classifiers to favor majority non-hazardous light rain.
+    \item \textbf{Shifting Decadal Baselines and Attribution Constraints:} Rainfall baselines are altering under climate variability, requiring non-parametric trend detection while recognizing that decadal records indicate localized variability rather than anthropogenic attribution.
+\end{enumerate}
+Addressing these challenges requires an integrated pipeline combining terrestrial gauge auditing, satellite downscaling, spatial clustering, and regularized classification.
 
 \begin{figure}[!t]
 \centering
@@ -101,15 +119,15 @@ To overcome these operational challenges, this research established an integrate
 
 \section{Literature Review}
 \label{sec:literature}
-The integration of satellite-derived precipitation estimates with terrestrial gauge observations constitutes an active research domain in mountain hydrometeorology. Satellite products provide continuous gridded monitoring over inaccessible terrains, but rugged topography introduces substantial retrieval errors that necessitate machine learning calibration.
+Integrating satellite-derived precipitation estimates with terrestrial gauge observations constitutes an active research domain in mountain hydrometeorology. Satellite products deliver continuous gridded monitoring over inaccessible terrains, but rugged topography introduces retrieval errors requiring machine learning calibration.
 
 \subsection{Analysis of Core Base Papers and Regional Benchmarks}
-This investigation was built upon three foundational base papers and five supporting regional and methodological benchmarks (summarized in Table~\ref{tab:lit_comparison}):
+This study was built upon three foundational base papers and five supporting regional and methodological benchmarks (Table~\ref{tab:lit_comparison}):
 \begin{itemize}
-    \item \textbf{Base Paper 1 (Sharma et al. \cite{sharma2020}):} Evaluated GPM IMERG satellite precipitation across diverse topographic regions of Nepal against terrestrial observations, establishing that satellite products exhibit high False Alarm Ratios ($\text{FAR} > 40\%$) and elevation-dependent biases across Himalayan basins.
-    \item \textbf{Base Paper 2 (Khanal et al. \cite{khanal2024}):} Analyzed decadal rainfall trends across Nepal's watersheds over three decades, identifying statistically significant increases in extreme storm frequency and daily precipitation maximums using Mann--Kendall tests.
-    \item \textbf{Base Paper 3 (Lei et al. \cite{lei2025}):} Benchmarked nine machine learning algorithms for downscaling and calibrating IMERG precipitation, demonstrating that non-linear ensemble techniques outperform linear statistical methods but noting a lack of physical interpretability.
-    \item \textbf{Supporting Literature:} Tang et al. \cite{Tang2020} and Huffman et al. \cite{Huffman2020} validated the global performance and calibration algorithms of GPM IMERG V07. Breiman \cite{Breiman2001} and Chen and Guestrin \cite{Chen2016} established the algorithmic foundations for Random Forest and XGBoost. Lundberg and Lee \cite{Lundberg2017} developed the unified SHAP framework for Explainable Artificial Intelligence. Regional studies by Lamichhane et al. \cite{lamichhane2025} and Talchabhadel et al. \cite{talchabhadel2022} documented the devastating hydrometeorological impacts of recent extreme cloudbursts in the Kathmandu Valley, including the catastrophic September 2024 flood disaster.
+    \item \textbf{Base Paper 1 (Sharma et al. \cite{sharma2020}):} Evaluated GPM IMERG across Nepal against terrestrial gauges, establishing that satellite products exhibit high False Alarm Ratios ($\text{FAR} > 40\%$) and elevation-dependent biases in Himalayan basins.
+    \item \textbf{Base Paper 2 (Khanal et al. \cite{khanal2024}):} Analyzed decadal rainfall trends across Nepal's watersheds over three decades, identifying statistically significant increases in extreme storm frequency and daily maximums using Mann--Kendall tests.
+    \item \textbf{Base Paper 3 (Lei et al. \cite{lei2025}):} Benchmarked nine machine learning algorithms for downscaling IMERG precipitation, demonstrating that non-linear ensemble techniques outperform linear statistical methods but noting a lack of physical interpretability.
+    \item \textbf{Supporting Literature:} Tang et al. \cite{Tang2020} and Huffman et al. \cite{Huffman2020} validated GPM IMERG V07 calibration. Breiman \cite{Breiman2001} and Chen and Guestrin \cite{Chen2016} established algorithmic formulations for Random Forest and XGBoost. Lundberg and Lee \cite{Lundberg2017} developed the unified SHAP framework for Explainable AI. Regional studies by Lamichhane et al. \cite{lamichhane2025} and Talchabhadel et al. \cite{talchabhadel2022} documented the disastrous hydrometeorological impacts of recent cloudbursts in the Kathmandu Valley, including the September 2024 flood disaster.
 \end{itemize}
 
 \begin{table}[!t]
@@ -136,11 +154,11 @@ This investigation was built upon three foundational base papers and five suppor
 \end{table}
 
 \subsection{Identification of Addressed Research Gaps}
-Critical examination of existing literature identified three core research gaps that directly motivated the methodology of this study:
+Critical examination of existing literature identified three core research gaps motivating this study:
 \begin{enumerate}
-    \item \textbf{Gap 1 (Originating from Sharma et al. \cite{sharma2020}):} Prior satellite evaluations focused on large-scale regional averages that smoothed out localized valley microclimates. There is an absence of point-to-grid machine learning frameworks incorporating station elevation and geographic coordinates to correct satellite bias at individual station locations across complex mountain basins \cite{karki2017}.
-    \item \textbf{Gap 2 (Originating from Khanal et al. \cite{khanal2024}):} Climatological studies have examined historical rainfall trends as isolated statistical time-series without connecting detected decadal shifts to forward-looking, multi-class predictive intensity forecasting \cite{zhu2023, callau2023}.
-    \item \textbf{Gap 3 (Originating from Lei et al. \cite{lei2025}):} Previous machine learning applications treated models as opaque black boxes without explaining the underlying physical mechanisms. There is a need to unite unsupervised spatial clustering with SHAP feature attribution to explain how antecedent precipitation memory and topography govern rainfall predictions \cite{he2009, talchabhadel2021}.
+    \item \textbf{Gap 1 (From Sharma et al. \cite{sharma2020}):} Regional satellite evaluations smoothed out localized microclimates. There is an absence of point-to-grid machine learning frameworks incorporating station elevation and geographic coordinates to correct satellite bias at individual station locations across complex mountain basins \cite{karki2017}.
+    \item \textbf{Gap 2 (From Khanal et al. \cite{khanal2024}):} Climatological studies analyzed historical rainfall trends as isolated statistical time-series without connecting detected decadal shifts to forward-looking, multi-class predictive intensity forecasting \cite{zhu2023, callau2023}.
+    \item \textbf{Gap 3 (From Lei et al. \cite{lei2025}):} Previous machine learning applications treated models as black boxes without explaining underlying physical mechanisms. There is a need to unite unsupervised spatial clustering with SHAP feature attribution to explain how antecedent precipitation memory and topography govern rainfall predictions \cite{he2009, talchabhadel2021}.
 \end{enumerate}
 
 
@@ -149,19 +167,19 @@ Critical examination of existing literature identified three core research gaps 
 This study implemented five machine learning and statistical algorithms to analyze spatial regimes and classify precipitation intensity, alongside non-parametric trend tests and satellite validation metrics.
 
 \subsection{Unsupervised Spatial Clustering: PCA and K-Means}
-\textbf{Principal Component Analysis (PCA):} PCA reduces feature dimensionality while preserving maximum spatial variance. Input station vectors $\mathbf{x} \in \mathbb{R}^p$ are standardized to zero mean and unit variance ($\tilde{\mathbf{x}} = (\mathbf{x} - \boldsymbol{\mu}) / \boldsymbol{\sigma}$). The sample covariance matrix $\mathbf{\Sigma}$ and eigenvalue decomposition are computed as:
+\textbf{Principal Component Analysis (PCA):} PCA reduces feature dimensionality while preserving spatial variance. Station vectors $\mathbf{x} \in \mathbb{R}^p$ are standardized to zero mean and unit variance ($\tilde{\mathbf{x}} = (\mathbf{x} - \boldsymbol{\mu}) / \boldsymbol{\sigma}$). The sample covariance matrix $\mathbf{\Sigma}$ and eigenvalue decomposition are computed as:
 \begin{equation}
 \mathbf{\Sigma} = \frac{1}{n-1} \tilde{\mathbf{X}}^\top \tilde{\mathbf{X}}, \quad \mathbf{\Sigma}\mathbf{v}_i = \lambda_i \mathbf{v}_i
 \label{eq:pca_cov}
 \end{equation}
-where $\lambda_i$ represents the $i$-th eigenvalue indicating explained variance, and $\mathbf{v}_i$ is the corresponding orthogonal eigenvector. Projecting standardized features onto the top $k$ eigenvectors yields low-dimensional coordinates $\mathbf{Z} = \tilde{\mathbf{X}}\mathbf{V}_k$.
+where $\lambda_i$ represents the eigenvalue indicating explained variance, and $\mathbf{v}_i$ is the orthogonal eigenvector. Projecting standardized features onto top $k$ eigenvectors yields low-dimensional coordinates $\mathbf{Z} = \tilde{\mathbf{X}}\mathbf{V}_k$.
 
-\textbf{K-Means Clustering:} K-Means partitions $n$ station feature vectors $\mathbf{z}_i$ into $K$ disjoint clusters $S = \{S_1, S_2, \dots, S_K\}$ by iteratively minimizing the within-cluster sum of squares (WCSS):
+\textbf{K-Means Clustering:} K-Means partitions $n$ station vectors $\mathbf{z}_i$ into $K$ disjoint clusters $S = \{S_1, \dots, S_K\}$ by minimizing within-cluster sum of squares (WCSS):
 \begin{equation}
 J = \sum_{j=1}^{K} \sum_{i=1}^{n} || \mathbf{x}_i^{(j)} - \mathbf{c}_j ||^2
 \label{eq:kmeans}
 \end{equation}
-where $\mathbf{x}_i^{(j)}$ represents sample $i$ belonging to cluster $j$, and $\mathbf{c}_j$ denotes the centroid of cluster $j$. Optimal cluster separation was validated using the Silhouette Coefficient $s(i) = \frac{b(i) - a(i)}{\max(a(i), b(i))}$, where $a(i)$ is the mean intra-cluster distance and $b(i)$ is the mean nearest-cluster distance.
+where $\mathbf{c}_j$ denotes the centroid of cluster $j$. Cluster validity was confirmed using the Silhouette Coefficient $s(i) = \frac{b(i) - a(i)}{\max(a(i), b(i))}$, where $a(i)$ is mean intra-cluster distance and $b(i)$ is mean nearest-cluster distance.
 
 \subsection{Supervised Classification Algorithms}
 \textbf{Random Forest:} An ensemble of $B$ decision trees trained on bootstrap samples with random feature subsampling. Node splits maximize Gini impurity reduction:
@@ -169,26 +187,26 @@ where $\mathbf{x}_i^{(j)}$ represents sample $i$ belonging to cluster $j$, and $
 I_G(t) = 1 - \sum_{c=1}^{C} p(c|t)^2
 \label{eq:gini}
 \end{equation}
-where $p(c|t)$ is the proportion of class $c$ samples at node $t$. Final class predictions are obtained through majority voting across all ensemble trees: $\hat{y} = \arg\max_c \sum_{b=1}^{B} I(\hat{y}_b = c)$.
+where $p(c|t)$ is the proportion of class $c$ samples at node $t$. Final class predictions are obtained through majority voting: $\hat{y} = \arg\max_c \sum_{b=1}^{B} I(\hat{y}_b = c)$.
 
 \textbf{XGBoost:} XGBoost minimizes an objective function combining regularized loss and tree complexity:
 \begin{equation}
 \mathcal{L}^{(t)} = \sum_{i=1}^{n} l\left(y_i, \hat{y}_i^{(t-1)} + f_t(\mathbf{x}_i)\right) + \Omega(f_t)
 \label{eq:xgboost_obj}
 \end{equation}
-where $l$ denotes the multi-class log-loss function measuring prediction error, $\hat{y}_i^{(t-1)}$ is the prediction at step $t-1$, and $f_t(\mathbf{x}_i)$ is the newly added decision tree. The model complexity penalty $\Omega(f)$ is formulated as:
+where $l$ denotes multi-class log-loss measuring prediction error, and $f_t(\mathbf{x}_i)$ is the newly added decision tree. The model complexity penalty $\Omega(f)$ is formulated as:
 \begin{equation}
 \Omega(f) = \gamma T + \frac{1}{2} \lambda ||\mathbf{w}||^2 + \alpha ||\mathbf{w}||_1
 \label{eq:xgboost_reg}
 \end{equation}
-where $T$ represents the total number of terminal leaves, $\mathbf{w}$ is the vector of leaf weights, $\gamma$ is the leaf penalty parameter, and $\lambda, \alpha$ represent $L_2$ and $L_1$ regularization terms preventing overfitting.
+where $T$ represents the number of terminal leaves, $\mathbf{w}$ is the vector of leaf weights, $\gamma$ is the leaf penalty, and $\lambda, \alpha$ represent $L_2$ and $L_1$ regularization terms.
 
-\textbf{Support Vector Machines (Linear and RBF Kernels):} SVM seeks an optimal separating hyperplane that maximizes the functional margin between classes. In the dual formulation with Lagrange multipliers $\alpha_i$, the optimization problem is expressed as:
+\textbf{Support Vector Machines (Linear and RBF Kernels):} SVM seeks an optimal hyperplane maximizing functional margins between classes. In the dual formulation with Lagrange multipliers $\alpha_i$, the optimization problem is expressed as:
 \begin{equation}
 \max_{\boldsymbol{\alpha}} \sum_{i=1}^{n}\alpha_i - \frac{1}{2}\sum_{i,j}\alpha_i\alpha_j y_i y_j K(\mathbf{x}_i, \mathbf{x}_j)
 \label{eq:svm_dual}
 \end{equation}
-subject to $0 \le \alpha_i \le C$ and $\sum_{i=1}^{n} \alpha_i y_i = 0$, where $C$ is the regularization penalty balancing margin width against training errors. Both the Linear Kernel $K(\mathbf{x}_i, \mathbf{x}_j) = \mathbf{x}_i^\top \mathbf{x}_j$ and Radial Basis Function (RBF) Kernel $K(\mathbf{x}_i, \mathbf{x}_j) = \exp(-\gamma \|\mathbf{x}_i - \mathbf{x}_j\|^2)$ were implemented, where $\gamma$ determines the influence radius of individual support vectors.
+subject to $0 \le \alpha_i \le C$ and $\sum_{i=1}^{n} \alpha_i y_i = 0$, where $C$ is the regularization penalty. Both the Linear Kernel $K(\mathbf{x}_i, \mathbf{x}_j) = \mathbf{x}_i^\top \mathbf{x}_j$ and Radial Basis Function (RBF) Kernel $K(\mathbf{x}_i, \mathbf{x}_j) = \exp(-\gamma \|\mathbf{x}_i - \mathbf{x}_j\|^2)$ were implemented, where $\gamma$ governs support vector influence.
 
 \subsection{Antecedent Rainfall and Validation Formulations}
 To incorporate physical catchment wetness and hydrologic memory, antecedent precipitation rolling sums over 3-day and 7-day windows were calculated:
@@ -198,12 +216,12 @@ R_{3,t} = \sum_{i=1}^{3} R_{t-i}, \qquad R_{7,t} = \sum_{i=1}^{7} R_{t-i}
 \end{equation}
 where $R_{t-i}$ denotes recorded precipitation on day $t-i$.
 
-Satellite estimation accuracy relative to ground gauges was evaluated using the Pearson Correlation Coefficient ($\text{CC}$):
+Satellite accuracy relative to ground gauges was evaluated using the Pearson Correlation Coefficient ($\text{CC}$):
 \begin{equation}
 \text{CC} = \frac{\sum_{i=1}^{n} (G_i - \bar{G})(S_i - \bar{S})}{\left[ \sum_{i=1}^{n} (G_i - \bar{G})^2 \sum_{i=1}^{n} (S_i - \bar{S})^2 \right]^{1/2}}
 \label{eq:cc}
 \end{equation}
-where $G_i$ represents ground gauge observations, $S_i$ represents satellite estimates, and $\bar{G}, \bar{S}$ are their sample means. Continuous error magnitudes were quantified using Root Mean Square Error ($\text{RMSE}$) and Mean Bias ($\text{MB}$):
+where $G_i$ represents ground observations, $S_i$ represents satellite estimates, and $\bar{G}, \bar{S}$ are sample means. Continuous error magnitudes were quantified using Root Mean Square Error ($\text{RMSE}$) and Mean Bias ($\text{MB}$):
 \begin{equation}
 \begin{aligned}
 \text{RMSE} &= \sqrt{\frac{1}{n} \sum_{i=1}^{n} (S_i - G_i)^2}, \\
@@ -219,9 +237,9 @@ Categorical contingency performance was assessed via Probability of Detection ($
 \end{aligned}
 \label{eq:pod_far_csi}
 \end{equation}
-where $H$ represents successful hits, $M$ represents missed storm events, and $F$ represents false alarms.
+where $H$ represents successful hits, $M$ represents missed events, and $F$ represents false alarms.
 
-Decadal monotonic trends were quantified using the non-parametric Mann--Kendall test statistic $S$ \cite{gorelick2017, pedregosa2011}:
+Decadal monotonic trends were quantified using the Mann--Kendall test statistic $S$ \cite{gorelick2017, pedregosa2011}:
 \begin{equation}
 S = \sum_{i=1}^{n-1} \sum_{j=i+1}^{n} \operatorname{sgn}(x_j - x_i)
 \label{eq:mk_s}
@@ -260,7 +278,7 @@ The study area covers the Kathmandu watershed ($650\text{ km}^2$, latitudes $27.
 \label{fig:study_area}
 \end{figure}
 
-Ground rainfall records spanning 10 complete years from 2016 through 2025 ($69{,}407$ station-days) were obtained from the DHM network. Rigorous screening and quality-control auditing across all 21 initial candidate stations (Table~\ref{tab:audit}) identified two stations with severe missingness exceeding $90\%$: Tarebhir ($100\%$ missing) and Thankot ($92.50\%$ missing). Both were excluded, retaining 19 high-quality stations (Table~\ref{tab:stations}). Remaining missing observations across the 19 stations were imputed using daily linear interpolation bounded at zero (Fig.~\ref{fig:data_qc_imputation}).
+Ground rainfall records spanning 10 complete years from 2016 through 2025 ($69{,}407$ station-days) were obtained from the DHM network. Screening across 21 initial candidate stations (Table~\ref{tab:audit}) identified two stations with severe missingness exceeding $90\%$: Tarebhir ($100\%$) and Thankot ($92.50\%$). Both were dropped, retaining 19 high-quality stations (Table~\ref{tab:stations}). Remaining missing observations across the 19 stations were imputed using daily linear interpolation bounded at zero (Fig.~\ref{fig:data_qc_imputation}).
 
 \begin{table}[!t]
 \centering
@@ -373,7 +391,7 @@ To evaluate generalization and prevent temporal data leakage, records were split
     \item \textbf{Validation Set (2023--2024):} 2 years, $N = 13{,}889$ samples ($20.0\%$).
     \item \textbf{Independent Test Set (2025):} 1 year, $N = 6{,}935$ samples ($10.0\%$).
 \end{itemize}
-In addition, Leave-One-District-Out (LODO) spatial cross-validation was conducted across Kathmandu, Lalitpur, and Bhaktapur districts to evaluate spatial generalization to unmonitored sectors. Hyperparameters were tuned to prevent overfitting while handling class imbalance (Table~\ref{tab:hyperparameters}).
+Leave-One-District-Out (LODO) spatial cross-validation was conducted across Kathmandu, Lalitpur, and Bhaktapur districts. Hyperparameters were tuned to prevent overfitting while handling class imbalance (Table~\ref{tab:hyperparameters}).
 
 \begin{table}[!t]
 \caption{Hyperparameter and Preprocessing Configuration for Evaluated Machine Learning Classifiers}
@@ -649,7 +667,7 @@ Feature importance from native XGBoost (Fig.~\ref{fig:feat_imp}) and global SHAP
 
 \section{Discussion}
 \label{sec:discussion}
-The experimental results demonstrate clear operational trade-offs for meteorological early warning systems. Feature-scaled Linear SVM yielded the highest overall accuracy ($74.72\%$) and lowest computational latency, making it optimal for routine daily weather advisories where false alarms must be minimized. In contrast, XGBoost and Random Forest excelled at capturing rare, high-consequence precipitation: XGBoost reached a Macro ROC-AUC of $0.88$ and $42.65\%$ recall on Class 2 heavy storms, while Random Forest captured $80.00\%$ of Class 3 very heavy cloudbursts.
+The experimental results demonstrate clear operational trade-offs for early warning systems. Feature-scaled Linear SVM yielded the highest overall accuracy ($74.72\%$) and lowest computational latency, making it optimal for routine daily weather advisories where false alarms must be minimized. In contrast, XGBoost and Random Forest excelled at capturing rare, high-consequence precipitation: XGBoost reached a Macro ROC-AUC of $0.88$ and $42.65\%$ recall on Class 2 heavy storms, while Random Forest captured $80.00\%$ of Class 3 very heavy cloudbursts.
 
 SHAP feature attribution confirmed that antecedent rainfall memory ($P_{t-1}, P_{t-3}$) is the dominant physical driver of daily precipitation classification. Mountain storms in the Kathmandu watershed exhibit multi-day persistence, where prior-day rainfall primes atmospheric humidity and catchment saturation.
 
@@ -667,7 +685,7 @@ All data utilized in this study was accessed under open research licenses from D
 
 \section{Conclusion and Future Work}
 \label{sec:conclusion}
-This research developed a machine learning framework for daily rainfall classification and decadal trend detection across the Kathmandu watershed, integrating 10 years of synchronous ground gauge data ($69{,}407$ station-days) with GPM IMERG satellite estimates. The findings directly resolve the three core research questions:
+This research developed a machine learning framework for daily rainfall classification and decadal trend detection across the Kathmandu watershed, integrating 10 years of synchronous ground gauge data ($69{,}407$ station-days) with GPM IMERG satellite estimates. The findings directly resolve the core research objectives:
 \begin{enumerate}
     \item \textbf{Satellite Reliability:} Raw GPM IMERG V07 satellite rainfall systematically overestimates daily rainfall ($\text{MB} = +2.78\text{ mm/day}$) and exhibits a $46.12\%$ False Alarm Ratio over mountain terrain, confirming the necessity of ground calibration.
     \item \textbf{Decadal Trend Shifts:} Mann--Kendall tests confirmed statistically significant increases in annual rainfall ($+0.2012\text{ mm/yr}, p = 0.0491$) and heavy rain days ($+0.0820\text{ days/yr}, p = 0.0210$), proving that extreme precipitation events are intensifying.
@@ -860,7 +878,6 @@ Visual evidence documenting the sequential execution of all ten sections of \tex
 \end{figure*}
 
 \clearpage
-\clearpage
 \section{Dashboard Screenshots: All Functional Sections}
 \label{app:dashboard}
 Visual evidence documenting all six operational sections of the interactive Streamlit decision-support application (\texttt{dashboard.py}) deployed locally at \texttt{http://localhost:8501/} is presented below:
@@ -917,7 +934,6 @@ Visual evidence documenting all six operational sections of the interactive Stre
 \label{fig:dash_sec5_sec6}
 \end{figure*}
 
-\clearpage
 \clearpage
 \section{Output Evidence}
 \label{app:output}
