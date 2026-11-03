@@ -67,7 +67,8 @@ Scripts/
 # 6. Project Backups & Temporary Files
 # ------------------------------------------------------------------------------
 bak/
-*.bak
+*.bak*
+scratch/
 *.backup*
 *.backup_before_2col_fixes
 *.tmp
